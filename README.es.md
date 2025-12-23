@@ -1,9 +1,9 @@
-# ngx-essentials-schematics
+# ngx-autogen
 
 [![Language: English](https://img.shields.io/badge/lang-en-blue.svg)](README.md)
 [![Language: Spanish](https://img.shields.io/badge/lang-es-yellow.svg)](README.es.md)
 
-**ngx-essentials-schematics** es un conjunto de schematics diseñados para optimizar y estandarizar el flujo de trabajo en proyectos Angular. Esta librería proporciona herramientas de generación de código que siguen las mejores prácticas, permitiendo a los desarrolladores ahorrar tiempo en tareas repetitivas y configuración de arquitectura.
+**ngx-autogen** es un conjunto de schematics diseñados para optimizar y estandarizar el flujo de trabajo en proyectos Angular. Esta librería proporciona herramientas de generación de código que siguen las mejores prácticas, permitiendo a los desarrolladores ahorrar tiempo en tareas repetitivas y configuración de arquitectura.
 
 ## 🚀 Características
 
@@ -13,7 +13,7 @@ El proyecto se lanza inicialmente con un enfoque en la gestión de estado, pero 
 
 ## 📅 Próximamente
 
-**ngx-essentials-schematics** es un proyecto en evolución continua. Se irán agregando progresivamente nuevas herramientas y schematics para cubrir más aspectos del desarrollo en Angular, como:
+**ngx-autogen** es un proyecto en evolución continua. Se irán agregando progresivamente nuevas herramientas y schematics para cubrir más aspectos del desarrollo en Angular, como:
 
 - Generación de servicios y utilidades.
 - Scaffolding para componentes avanzados.
@@ -23,7 +23,7 @@ El proyecto se lanza inicialmente con un enfoque en la gestión de estado, pero 
 Puedes instalar el paquete en tu proyecto Angular mediante angular cli para que se configure automáticamente el proyecto con las dependencias necesarias:
 
 ```bash
-ng add ngx-essentials-schematics
+ng add ngx-autogen
 ```
 
 ## 🛠️ Uso

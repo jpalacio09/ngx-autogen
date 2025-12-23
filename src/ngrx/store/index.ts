@@ -75,7 +75,7 @@ export function signalStore(options: SchemaOptions): Rule {
   return async (tree: Tree) => {
     const workspace = await getWorkspace(tree);
     const globalConfig = (workspace.extensions as any).schematics?.[
-      "ngx-essentials-schematics:all"
+      "ngx-autogen:all"
     ];
     if (globalConfig && globalConfig.pk && !options.pk) {
       options.pk = globalConfig.pk;

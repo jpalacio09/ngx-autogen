@@ -1,5 +1,5 @@
 {
-  "name": "ngx-essentials-schematics",
+  "name": "@jpdev/ngx-autogen",
   "version": "0.1.0",
   "description": "A collection of Angular schematics for essential functionalities.",
   "main": "dist/index.js",
@@ -30,14 +30,14 @@
   "schematics": "./src/collection.json",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jpalacio09/ngx-essentials-schematics.git"
+    "url": "https://github.com/jpalacio09/ngx-autogen.git"
   },
   "publishConfig": {
     "access": "public"
   },
-  "homepage": "https://github.com/jpalacio09/ngx-essentials-schematics#readme",
+  "homepage": "https://github.com/jpalacio09/ngx-autogen#readme",
   "bugs": {
-    "url": "https://github.com/jpalacio09/ngx-essentials-schematics/issues"
+    "url": "https://github.com/jpalacio09/ngx-autogen/issues"
   },
   "funding": {
     "type": "github",

@@ -2,7 +2,7 @@
   "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
     "ng-add": {
-      "description": "Ng add schematic for ngx-essentials-schematics.",
+      "description": "Ng add schematic for ngx-autogen.",
       "factory": "./ng-add/index#ngAdd",
       "schema": "./ng-add/schema.json"
     },

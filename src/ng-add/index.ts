@@ -52,7 +52,7 @@ export function ngAdd(options: NgAddSchema): Rule {
     );
 
     // 4. Modificar package.json
-    const packageName = "ngx-essentials-schematics";
+    const packageName = "ngx-autogen";
 
     // Inyectar dependencias compatibles
     packageJson.dependencies = {
@@ -104,13 +104,13 @@ function updateAngularJson(tree: Tree, options: NgAddSchema) {
 
   if (!workspace.cli) workspace.cli = {};
   const collections = workspace.cli.schematicCollections || [];
-  if (!collections.includes("ngx-essentials-schematics")) {
-    collections.push("ngx-essentials-schematics");
+  if (!collections.includes("ngx-autogen")) {
+    collections.push("ngx-autogen");
     workspace.cli.schematicCollections = collections;
   }
 
   if (!workspace.schematics) workspace.schematics = {};
-  workspace.schematics["ngx-essentials-schematics:all"] = {
+  workspace.schematics["ngx-autogen:all"] = {
     pk: options.pk,
   };
 
