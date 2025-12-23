@@ -1,0 +1,16 @@
+export interface EntityStatus {
+  addError?: Error | null;
+  addLoading?: boolean;
+  deleteError?: Error | null;
+  deleteLoading?: boolean;
+  error: Error | null;
+  idsDeleting?: (number | string)[];
+  idSelected?: null | number | string;
+  idsUpdating?: (number | string)[];
+  loaded: boolean;
+  loading: boolean;
+  selectedError?: Error | null;
+  selectedLoading?: boolean;
+  updateError?: Error | null;
+  updateLoading?: boolean;
+}

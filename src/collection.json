@@ -5,6 +5,11 @@
       "description": "Ng add schematic for ngx-essentials-schematics.",
       "factory": "./ng-add/index#ngAdd",
       "schema": "./ng-add/schema.json"
+    },
+    "app-store": {
+      "description": "Adds NgRx Store to the Angular application with signal support.",
+      "factory": "./ngrx/store/index#signalStore",
+      "schema": "./ngrx/store/schema.json"
     }
   }
 }

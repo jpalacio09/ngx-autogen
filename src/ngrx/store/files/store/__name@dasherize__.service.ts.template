@@ -1,0 +1,29 @@
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import {
+  Add<%= classify(name) %>,
+  <%= classify(name) %>Dto,
+  Update<%= classify(name) %>
+} from './<%= dasherize(name) %>.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class <%= classify(name) %>Service {
+
+  add<%= classify(name) %>$(entity: Add<%= classify(name) %>): Observable<number> {
+    return of(0);
+  }
+
+  delete<%= classify(name) %>$(<%= pk %>: number): Observable<boolean> {
+    return of(true);
+  }
+
+  get<%= classify(pluralize(name)) %>$(): Observable<<%= classify(name) %>Dto[]> {
+    return of([]);
+  }
+
+  update<%= classify(name) %>$(entity: Update<%= classify(name) %>): Observable<boolean> {
+    return of(true);
+  }
+}

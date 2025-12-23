@@ -1,0 +1,14 @@
+import { FormGroupType } from '../common/form/form.model';
+
+export interface Add<%= classify(name) %> {
+}
+
+export type Add<%= classify(name) %>Form = FormGroupType<Add<%= classify(name) %>>;
+
+export interface <%= classify(name) %>Dto {
+  <%= pk %>: number;
+}
+
+export type Update<%= classify(name) %> = Partial<<%= classify(name) %>Dto> & Pick<<%= classify(name) %>Dto, '<%= pk %>'>;
+
+export interface <%= classify(name) %>Request{}

@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "SignalStoreSchematic",
+  "title": "Signal Store Schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the entity.",
+      "x-prompt": "What's the name of the entity?",
+      "priority": 1
+    },
+    "path": {
+      "type": "string",
+      "description": "Destination path.",
+      "default": "src/app/core"
+    },
+    "language": {
+      "type": "string",
+      "description": "Language for pluralization ('en' for English, 'es' for Spanish).",
+      "enum": ["en", "es"],
+      "default": "en"
+    },
+    "pk": {
+      "type": "string",
+      "description": "Name of the primary key."
+    }
+  },
+  "required": ["name"]
+}

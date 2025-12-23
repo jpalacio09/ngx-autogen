@@ -1,0 +1,212 @@
+import { computed, inject } from '@angular/core';
+import { patchState, signalStore, type, withComputed, withHooks, withMethods, withState } from '@ngrx/signals';
+import {
+  addEntity,
+  entityConfig,
+  removeEntity,
+  setAllEntities,
+  updateEntity,
+  withEntities
+} from '@ngrx/signals/entities';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { catchError, of, pipe, switchMap, tap } from 'rxjs';
+
+import { EntityStatus } from '../common/entity/entity.model';
+import {
+  <%= classify(name) %>Dto,
+  Add<%= classify(name) %>,
+  Update<%= classify(name) %>
+} from './<%= dasherize(name) %>.model';
+import { <%= classify(name) %>Service } from './<%= dasherize(name) %>.service';
+
+const initialStatus: EntityStatus = {
+  error: null,
+  loaded: false,
+  loading: false,
+};
+
+const config = entityConfig({
+  entity: type<<%= classify(name) %>Dto>(),
+  selectId: (entity) => entity.<%= pk %>,
+});
+
+export const <%= classify(name) %>Store = signalStore(
+  withEntities(config),
+  withState({
+    _status: initialStatus,
+  }),
+  withComputed(({ entityMap, _status }) => ({
+    <%= camelize(pluralize(name)) %>: computed(() => Object.values(entityMap())),
+    <%= camelize(name) %>Seleccionado: computed(() => {
+      const <%= pk %> = _status().idSelected;
+      return <%= pk %> ? entityMap()[<%= pk %>] : null;
+    }),
+    error: computed(() => _status().error),
+    loaded: computed(() => _status().loaded),
+    loading: computed(() => _status().loading),
+    loadingRemove: computed(
+      () => (<%= pk %>?: number) =>
+        (<%= pk %> ? _status().idsDeleting?.includes(<%= pk %>) : _status().deleteLoading) || false
+    ),
+    loadingUpdate: computed(
+      () => (<%= pk %>?: number) =>
+        (<%= pk %> ? _status().idsUpdating?.includes(<%= pk %>) : _status().updateLoading) || false
+    ),
+  })),
+  withMethods((store, <%= camelize(name) %>Service = inject(<%= classify(name) %>Service)) => ({
+    add<%= classify(name) %>: rxMethod<Add<%= classify(name) %>>(
+      pipe(
+        tap(() => {
+          patchState(store, { _status: { ...store._status(), addLoading: true } });
+        }),
+        switchMap((entity) => {
+          return <%= camelize(name) %>Service.add<%= classify(name) %>$(entity).pipe(
+            tap((<%= pk %>) => {
+              patchState(store, addEntity({ ...entity, <%= pk %> }, config), {
+                _status: {
+                  ...store._status(),
+                  addLoading: false,
+                  error: null,
+                },
+              });
+            }),
+            catchError(() => {
+              patchState(store, {
+                _status: {
+                  ...store._status(),
+                  addLoading: false,
+                  error: new Error('Error al agregar <%= name %>'),
+                },
+              });
+              return of(entity);
+            })
+          );
+        })
+      )
+    ),
+    load<%= classify(pluralize(name)) %>: rxMethod<void>(
+      pipe(
+        tap(() => {
+          patchState(store, { _status: { ...store._status(), loading: true } });
+        }),
+        switchMap(() => {
+          return <%= camelize(name) %>Service.get<%= classify(pluralize(name)) %>$().pipe(
+            tap((response) => {
+              patchState(store, setAllEntities(response, config), {
+                _status: {
+                  ...store._status(),
+                  error: null,
+                  loaded: true,
+                  loading: false,
+                },
+              });
+            }),
+            catchError(() => {
+              patchState(store, {
+                _status: {
+                  ...store._status(),
+                  error: new Error('Error al cargar <%= pluralize(name) %>'),
+                  loading: false,
+                },
+              });
+              return of([]);
+            })
+          );
+        })
+      )
+    ),
+    remove<%= classify(name) %>: rxMethod<number>(
+      pipe(
+        tap((<%= pk %>) => {
+          patchState(store, {
+            _status: {
+              ...store._status(),
+              deleteLoading: true,
+              idsDeleting: [...(store._status().idsDeleting || []), <%= pk %>],
+            },
+          });
+        }),
+        switchMap((<%= pk %>) => {
+          return <%= camelize(name) %>Service.delete<%= classify(name) %>$(<%= pk %>).pipe(
+            tap((success) => {
+              if (success) {
+                const idsDeleting = store._status().idsDeleting || [];
+                patchState(store, removeEntity(<%= pk %>), {
+                  _status: {
+                    ...store._status(),
+                    deleteLoading: false,
+                    error: null,
+                    idsDeleting: idsDeleting.filter((idDeleting) => idDeleting !== <%= pk %>),
+                  },
+                });
+              } else {
+                throw new Error('Error al eliminar <%= name %>');
+              }
+            }),
+            catchError(() => {
+              const idsDeleting = store._status().idsDeleting || [];
+              patchState(store, {
+                _status: {
+                  ...store._status(),
+                  deleteLoading: false,
+                  error: new Error('Error al eliminar <%= name %>'),
+                  idsDeleting: idsDeleting.filter((idDeleting) => idDeleting !== <%= pk %>),
+                },
+              });
+              return of(false);
+            })
+          );
+        })
+      )
+    ),
+    update<%= classify(name) %>: rxMethod<Update<%= classify(name) %>>(
+      pipe(
+        tap((entity) => {
+          patchState(store, {
+            _status: {
+              ...store._status(),
+              idsUpdating: [...(store._status().idsUpdating || []), entity.<%= pk %>],
+              updateLoading: true,
+            },
+          });
+        }),
+        switchMap((entity) => {
+          return <%= camelize(name) %>Service.update<%= classify(name) %>$(entity).pipe(
+            tap((success) => {
+              if (success) {
+                const idsUpdating = store._status().idsUpdating || [];
+                patchState(store, updateEntity({ changes: entity, id: entity.<%= pk %> }, config), {
+                  _status: {
+                    ...store._status(),
+                    error: null,
+                    idsUpdating: idsUpdating.filter((idUpdating) => idUpdating !== entity.<%= pk %>),
+                    updateLoading: false,
+                  },
+                });
+              } else {
+                throw new Error('Error al actualizar <%= name %>');
+              }
+            }),
+            catchError(() => {
+              const idsUpdating = store._status().idsUpdating || [];
+              patchState(store, {
+                _status: {
+                  ...store._status(),
+                  error: new Error('Error al actualizar <%= name %>'),
+                  idsUpdating: idsUpdating.filter((idUpdating) => idUpdating !== entity.<%= pk %>),
+                  updateLoading: false,
+                },
+              });
+              return of(false);
+            })
+          );
+        })
+      )
+    ),
+  })),
+  withHooks({
+    onInit: (store) => {
+      store.load<%= classify(pluralize(name)) %>();
+    },
+  })
+);
