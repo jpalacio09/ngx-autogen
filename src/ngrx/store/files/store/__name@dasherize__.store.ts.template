@@ -46,7 +46,7 @@ export const <%= classify(name) %>Store = signalStore(
     loading: computed(() => _status().loading),
     loadingRemove: computed(
       () => (<%= pk %>?: number) =>
-        (<%= pk %> ? _status().idsDeleting?.includes(<%= pk %>) : _status().deleteLoading) || false
+        (<%= pk %> ? _status().idsRemoving?.includes(<%= pk %>) : _status().removeLoading) || false
     ),
     loadingUpdate: computed(
       () => (<%= pk %>?: number) =>
@@ -121,22 +121,22 @@ export const <%= classify(name) %>Store = signalStore(
           patchState(store, {
             _status: {
               ...store._status(),
-              deleteLoading: true,
-              idsDeleting: [...(store._status().idsDeleting || []), <%= pk %>],
+              removeLoading: true,
+              idsRemoving: [...(store._status().idsRemoving || []), <%= pk %>],
             },
           });
         }),
         switchMap((<%= pk %>) => {
-          return <%= camelize(name) %>Service.delete<%= classify(name) %>$(<%= pk %>).pipe(
+          return <%= camelize(name) %>Service.remove<%= classify(name) %>$(<%= pk %>).pipe(
             tap((success) => {
               if (success) {
-                const idsDeleting = store._status().idsDeleting || [];
+                const idsRemoving = store._status().idsRemoving || [];
                 patchState(store, removeEntity(<%= pk %>), {
                   _status: {
                     ...store._status(),
-                    deleteLoading: false,
+                    removeLoading: false,
                     error: null,
-                    idsDeleting: idsDeleting.filter((idDeleting) => idDeleting !== <%= pk %>),
+                    idsRemoving: idsRemoving.filter((idRemoving) => idRemoving !== <%= pk %>),
                   },
                 });
               } else {
@@ -144,13 +144,13 @@ export const <%= classify(name) %>Store = signalStore(
               }
             }),
             catchError(() => {
-              const idsDeleting = store._status().idsDeleting || [];
+              const idsRemoving = store._status().idsRemoving || [];
               patchState(store, {
                 _status: {
                   ...store._status(),
-                  deleteLoading: false,
+                  removeLoading: false,
                   error: new Error('Error al eliminar <%= name %>'),
-                  idsDeleting: idsDeleting.filter((idDeleting) => idDeleting !== <%= pk %>),
+                  idsRemoving: idsRemoving.filter((idRemoving) => idRemoving !== <%= pk %>),
                 },
               });
               return of(false);

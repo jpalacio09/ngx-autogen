@@ -143,16 +143,7 @@ export function signalStore(options: SchemaOptions): Rule {
       join(movePath, "common/entity"),
       options
     );
-    const commonFormRule = mergeFilesSmart(
-      "./files/form",
-      join(movePath, "common/form"),
-      options
-    );
 
-    return chain([
-      mergeWith(templateStoreSource),
-      commonEntityRule,
-      commonFormRule,
-    ]);
+    return chain([mergeWith(templateStoreSource), commonEntityRule]);
   };
 }

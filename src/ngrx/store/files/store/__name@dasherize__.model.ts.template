@@ -1,4 +1,4 @@
-import { FormGroupType } from '../common/form/form.model';
+import { FormGroupType } from '../common/entity/entity.model';
 
 export interface Add<%= classify(name) %> {
 }

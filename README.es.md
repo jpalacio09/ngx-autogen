@@ -3,46 +3,46 @@
 [![Language: English](https://img.shields.io/badge/lang-en-blue.svg)](README.md)
 [![Language: Spanish](https://img.shields.io/badge/lang-es-yellow.svg)](README.es.md)
 
-**ngx-essentials-schematics** is a set of schematics designed to optimize and standardize the workflow in Angular projects. This library provides code generation tools that follow best practices, allowing developers to save time on repetitive tasks and architecture configuration.
+**ngx-essentials-schematics** es un conjunto de schematics diseñados para optimizar y estandarizar el flujo de trabajo en proyectos Angular. Esta librería proporciona herramientas de generación de código que siguen las mejores prácticas, permitiendo a los desarrolladores ahorrar tiempo en tareas repetitivas y configuración de arquitectura.
 
-## 🚀 Features
+## 🚀 Características
 
-The project is initially launched with a focus on state management, but is designed to grow:
+El proyecto se lanza inicialmente con un enfoque en la gestión de estado, pero está diseñado para crecer:
 
-- **Store Schematic**: Our first available schematic. It allows you to automatically generate the entire structure needed for a store based on signals (NGRX-Signals), facilitating the quick and scalable integration of state management in your applications.
+- **Store Schematic**: Nuestro primer schematic disponible. Permite generar automáticamente toda la estructura necesaria para un store basado en signals (NGRX-Signals), facilitando la integración rápida y escalable de la gestión de estado en tus aplicaciones.
 
-## 📅 Coming Soon
+## 📅 Próximamente
 
-**ngx-essentials-schematics** is a project in continuous evolution. New tools and schematics will be progressively added to cover more aspects of Angular development, such as:
+**ngx-essentials-schematics** es un proyecto en evolución continua. Se irán agregando progresivamente nuevas herramientas y schematics para cubrir más aspectos del desarrollo en Angular, como:
 
-- Generation of services and utilities.
-- Scaffolding for advanced components.
+- Generación de servicios y utilidades.
+- Scaffolding para componentes avanzados.
 
-## 📦 Installation
+## 📦 Instalación
 
-You can install the package in your Angular project using Angular CLI so that the project is automatically configured with the necessary dependencies:
+Puedes instalar el paquete en tu proyecto Angular mediante angular cli para que se configure automáticamente el proyecto con las dependencias necesarias:
 
 ```bash
 ng add ngx-essentials-schematics
 ```
 
-## 🛠️ Usage
+## 🛠️ Uso
 
-### Generate a Store
+### Generar un Store
 
-#### Properties
+#### Propiedades
 
-- `name` (required): name of the store.
-- `pk` (optional): name of the primary key. If not specified, the one specified during the schematic installation process will be used; otherwise, `id` will be used.
-- `path` (optional): path of the store. If not specified, the one specified during the schematic installation process will be used; otherwise, `src/app/core` will be used.
+- `name`(obligatorio): nombre del store.
+- `pk`(opcional): nombre de la primary key, si no se especifica se usara la especificada en el proceso de instalacion del schematic, de lo contrario se usara `id`.
+- `path`(opcional): ruta del store, si no se especifica se usara la especificada en el proceso de instalacion del schematic, de lo contrario se usara `src/app/core`.
 
-#### Example
+#### Ejemplo
 
 ```bash
 ng g app-store --name="user" --pk="cod"
 ```
 
-This will create the files `user.model.ts`, `user.service.ts`, `user.store.ts` within the `src/app/core/user` folder, the `entity.model.ts` file if it doesn't exist within the `src/app/core/common/entity` folder, and the `index.ts` file within the `src/app/core` folder.
+Esto creará los archivos `user.model.ts`, `user.service.ts`, `user.store.ts` dentro de la carpeta `src/app/core/user`, el archivo `entity.model.ts` si no existe, dentro de la carpeta `src/app/core/common/entity` y el archivo `index.ts` dentro de la carpeta `src/app/core`.
 
 ```bash
 common/
@@ -55,7 +55,7 @@ user/
 index.ts
 ```
 
-The `index.ts` file will export everything necessary so that the store can be imported and used anywhere in the application.
+El archivo `index.ts` exportará todo lo necesario para que el store pueda ser importado y utilizado en cualquier parte de la aplicación.
 
 ```bash
 /* USER */
@@ -64,7 +64,7 @@ export * from './user/user.service';
 export * from './user/user.store';
 ```
 
-The `entity.model.ts` file contains the interfaces and types necessary for state and form management.
+El archivo `entity.model.ts` contiene las interfaces y tipos necesarios para el manejo de estados y formularios.
 
 ```bash
 import { FormControl } from '@angular/forms';
@@ -91,7 +91,7 @@ export type FormGroupType<T> = {
 };
 ```
 
-The `user.model.ts` file contains the data model interface.
+El archivo `user.model.ts` contiene la interface del modelo de datos.
 
 ```bash
 import { FormGroupType } from '../common/form/form.model';
@@ -110,7 +110,7 @@ export type UpdateUser = Partial<UserDto> & Pick<UserDto, 'cod'>;
 export interface UserRequest{}
 ```
 
-The `user.service.ts` file contains the service responsible for business logic.
+El archivo `user.service.ts` contiene el servicio que se encarga de la lógica de negocio.
 
 ```bash
 import { Injectable } from '@angular/core';
@@ -144,7 +144,7 @@ export class UserService {
 }
 ```
 
-The `user.store.ts` file contains the store responsible for state management.
+El archivo `user.store.ts` contiene el store que se encarga de la gestión de estado.
 
 ```bash
 import { computed, inject } from '@angular/core';
@@ -224,7 +224,7 @@ export const UserStore = signalStore(
                 _status: {
                   ...store._status(),
                   addLoading: false,
-                  error: new Error('Error adding user'),
+                  error: new Error('Error al agregar user'),
                 },
               });
               return of(entity);
@@ -254,7 +254,7 @@ export const UserStore = signalStore(
               patchState(store, {
                 _status: {
                   ...store._status(),
-                  error: new Error('Error loading users'),
+                  error: new Error('Error al cargar users'),
                   loading: false,
                 },
               });
@@ -289,7 +289,7 @@ export const UserStore = signalStore(
                   },
                 });
               } else {
-                throw new Error('Error deleting user');
+                throw new Error('Error al eliminar user');
               }
             }),
             catchError(() => {
@@ -298,7 +298,7 @@ export const UserStore = signalStore(
                 _status: {
                   ...store._status(),
                   removeLoading: false,
-                  error: new Error('Error deleting user'),
+                  error: new Error('Error al eliminar user'),
                   idsRemoving: idsRemoving.filter((idRemoving) => idRemoving !== cod),
                 },
               });
@@ -333,7 +333,7 @@ export const UserStore = signalStore(
                   },
                 });
               } else {
-                throw new Error('Error updating user');
+                throw new Error('Error al actualizar user');
               }
             }),
             catchError(() => {
@@ -341,7 +341,7 @@ export const UserStore = signalStore(
               patchState(store, {
                 _status: {
                   ...store._status(),
-                  error: new Error('Error updating user'),
+                  error: new Error('Error al actualizar user'),
                   idsUpdating: idsUpdating.filter((idUpdating) => idUpdating !== entity.cod),
                   updateLoading: false,
                 },
@@ -361,6 +361,6 @@ export const UserStore = signalStore(
 );
 ```
 
-## 📄 License
+## 📄 Licencia
 
-This project is under the [MIT](LICENSE) license.
+Este proyecto está bajo la licencia [MIT](LICENSE).

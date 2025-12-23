@@ -1,5 +1,5 @@
 {
-  "name": "@jpalacio09/ngx-essentials-schematics",
+  "name": "ngx-essentials-schematics",
   "version": "0.1.0",
   "description": "A collection of Angular schematics for essential functionalities.",
   "main": "dist/index.js",

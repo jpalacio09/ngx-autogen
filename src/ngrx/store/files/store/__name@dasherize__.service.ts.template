@@ -15,7 +15,7 @@ export class <%= classify(name) %>Service {
     return of(0);
   }
 
-  delete<%= classify(name) %>$(<%= pk %>: number): Observable<boolean> {
+  remove<%= classify(name) %>$(<%= pk %>: number): Observable<boolean> {
     return of(true);
   }
 
