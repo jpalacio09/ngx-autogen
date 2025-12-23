@@ -1,0 +1,36 @@
+{
+  "name": "@jpalacio/ngx-essentials-schematics",
+  "version": "0.1.0",
+  "description": "A collection of Angular schematics for essential functionalities.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && jasmine src/**/*_spec.js",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "src/**/*.js",
+    "src/**/*.template",
+    "src/**/*.d.ts",
+    "src/**/schema.json",
+    "src/collection.json"
+  ],
+  "keywords": [
+    "schematics"
+  ],
+  "author": "",
+  "license": "MIT",
+  "schematics": "./src/collection.json",
+  "dependencies": {
+    "@angular-devkit/core": "^20.3.13",
+    "@angular-devkit/schematics": "^20.3.13",
+    "@schematics/angular": "^21.0.4",
+    "typescript": "~5.9.2"
+  },
+  "devDependencies": {
+    "@types/jasmine": "~5.1.0",
+    "@types/node": "^20.17.19",
+    "copyfiles": "^2.4.1",
+    "jasmine": "^5.0.0"
+  }
+}
