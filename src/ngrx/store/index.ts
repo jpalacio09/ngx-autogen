@@ -11,8 +11,7 @@ import {
   url,
 } from "@angular-devkit/schematics";
 import { getWorkspace } from "@schematics/angular/utility/workspace";
-
-import { SchemaOptions } from "./schema";
+import { StoreSchemaOptions } from "./schema";
 
 const pluralizeEs = (name: string): string => {
   if (!name) return name;
@@ -71,7 +70,7 @@ function mergeFilesSmart(
 
 let treeRef: Tree;
 
-export function signalStore(options: SchemaOptions): Rule {
+export function signalStore(options: StoreSchemaOptions): Rule {
   return async (tree: Tree) => {
     const workspace = await getWorkspace(tree);
     const globalConfig = (workspace.extensions as any).schematics?.[
@@ -126,7 +125,7 @@ export function signalStore(options: SchemaOptions): Rule {
         ...strings,
         ...options,
         pluralize: (word: string) => {
-          switch (options.language) {
+          switch (options.lang) {
             case "es":
               return pluralizeEs(word);
             default:

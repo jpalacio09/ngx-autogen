@@ -5,9 +5,9 @@ import {
   Tree,
 } from "@angular-devkit/schematics";
 import { NodePackageInstallTask } from "@angular-devkit/schematics/tasks";
-import { NgAddSchema } from "./schema";
+import { NgAddSchemaOptions } from "./schema";
 
-export function ngAdd(options: NgAddSchema): Rule {
+export function ngAdd(options: NgAddSchemaOptions): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     const packagePath = "/package.json";
     const buffer = tree.read(packagePath);
@@ -95,7 +95,7 @@ function sortObjectKeys(obj: any) {
     }, {});
 }
 
-function updateAngularJson(tree: Tree, options: NgAddSchema) {
+function updateAngularJson(tree: Tree, options: NgAddSchemaOptions) {
   const path = "/angular.json";
   const buffer = tree.read(path);
   if (!buffer) return;

@@ -15,7 +15,7 @@
       "description": "Destination path.",
       "default": "src/app/core"
     },
-    "language": {
+    "lang": {
       "type": "string",
       "description": "Language for pluralization ('en' for English, 'es' for Spanish).",
       "enum": ["en", "es"],
